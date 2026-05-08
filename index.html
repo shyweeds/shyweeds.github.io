@@ -43,7 +43,8 @@
       box-sizing: border-box;
     }
 
-    html, body {
+    html,
+    body {
       height: 100%;
     }
 
@@ -91,9 +92,27 @@
       animation-delay: -6s;
     }
 
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.22;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 92%);
+    }
+
     @keyframes float {
-      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-      50% { transform: translate3d(0, 18px, 0) scale(1.04); }
+      0%,
+      100% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+      50% {
+        transform: translate3d(0, 18px, 0) scale(1.04);
+      }
     }
 
     .wrap {
@@ -106,21 +125,36 @@
     }
 
     .card {
-      width: min(760px, 100%);
-      padding: 32px;
+      width: min(780px, 100%);
+      padding: 34px;
       border: 1px solid var(--line);
-      border-radius: 28px;
+      border-radius: 30px;
       background: linear-gradient(180deg, var(--card-strong), var(--card));
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 0%, rgba(125, 211, 252, 0.12), transparent 28%),
+        radial-gradient(circle at 95% 12%, rgba(167, 139, 250, 0.10), transparent 24%);
+      pointer-events: none;
     }
 
     .top {
+      position: relative;
       display: flex;
       align-items: center;
       gap: 18px;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
     }
 
     .avatar {
@@ -128,22 +162,36 @@
       height: 84px;
       border-radius: 24px;
       background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), transparent 28%),
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), transparent 28%),
         linear-gradient(135deg, var(--accent), var(--accent-2));
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.35),
-        0 16px 30px rgba(0,0,0,0.18);
+        inset 0 1px 0 rgba(255, 255, 255, 0.35),
+        0 16px 30px rgba(0, 0, 0, 0.18);
       flex: 0 0 auto;
       position: relative;
       overflow: hidden;
     }
 
+    .avatar::before,
     .avatar::after {
       content: "";
       position: absolute;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .avatar::before {
+      width: 30px;
+      height: 30px;
+      top: 14px;
+      right: 16px;
+    }
+
+    .avatar::after {
       inset: 14px;
       border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.24);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      background: transparent;
     }
 
     .eyebrow {
@@ -156,7 +204,7 @@
       border-radius: 999px;
       color: var(--muted);
       font-size: 0.9rem;
-      background: rgba(255,255,255,0.04);
+      background: rgba(255, 255, 255, 0.04);
     }
 
     .dot {
@@ -185,7 +233,10 @@
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
-      margin-top: 26px;
+      margin-top: 18px;
+      position: relative;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--line);
     }
 
     a {
@@ -225,7 +276,7 @@
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 16px;
-      margin-top: 28px;
+      margin-top: 22px;
     }
 
     .panel {
@@ -233,6 +284,19 @@
       border-radius: 20px;
       border: 1px solid var(--line);
       background: rgba(255, 255, 255, 0.04);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::after {
+      content: "";
+      position: absolute;
+      inset: auto -28px -28px auto;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(125, 211, 252, 0.10), transparent 68%);
+      pointer-events: none;
     }
 
     .section-title {
@@ -283,16 +347,7 @@
     }
 
     .tag {
-      display: inline-flex;
-      align-items: center;
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 0.88rem;
-      background: rgba(255,255,255,0.03);
-      margin-top: 12px;
-      width: fit-content;
+      display: none;
     }
 
     footer {
@@ -300,10 +355,25 @@
       color: var(--muted);
       font-size: 0.94rem;
       text-align: center;
+      letter-spacing: 0.02em;
     }
 
     .mono {
       font-variant-numeric: tabular-nums;
+    }
+
+    .footer-mark {
+      display: inline-grid;
+      place-items: center;
+      width: 18px;
+      height: 18px;
+      margin-right: 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--accent);
+      font-size: 0.75rem;
+      vertical-align: -2px;
     }
 
     @media (max-width: 720px) {
@@ -330,6 +400,7 @@
 </head>
 
 <body>
+  <div class="bg-grid" aria-hidden="true"></div>
   <div class="bg-orb one" aria-hidden="true"></div>
   <div class="bg-orb two" aria-hidden="true"></div>
 
@@ -340,7 +411,7 @@
         <div>
           <div class="eyebrow">
             <span class="dot" aria-hidden="true"></span>
-            <span>Minimal static homepage</span>
+            <span>Personal homepage</span>
           </div>
           <h1>Shyweeds</h1>
           <p class="subtitle">
@@ -369,7 +440,6 @@
             <li><span>Major: Automation</span></li>
             <li><span>Current focus: maybe building a ToyOS</span></li>
           </ul>
-          <span class="tag">Linux first</span>
         </section>
 
         <section class="panel">
@@ -383,14 +453,15 @@
             <li><span>Project C: my fork of dwm</span></li>
             <li><span>Project D: my dotfiles for dwm</span></li>
           </ul>
-          <span class="tag mono">single-file · static · no JS</span>
         </section>
       </div>
 
       <footer>
-        © <span id="year">2026</span> Shyweeds
+        <span class="footer-mark" aria-hidden="true">✦</span>
+        Shyweeds
       </footer>
     </section>
   </main>
 </body>
 </html>
+
