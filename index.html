@@ -1,42 +1,27 @@
 <!doctype html>
-<html lang="en-US">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0f172a" />
-  <meta name="description" content="Minimal static personal homepage" />
-  <title>Shy's Page</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="minimal terminal homepage" />
+  <title>shyweeds</title>
 
   <style>
     :root {
-      color-scheme: light dark;
-      --bg: #0b1020;
-      --bg2: #11182f;
-      --card: rgba(255, 255, 255, 0.08);
-      --card-strong: rgba(255, 255, 255, 0.12);
-      --text: #f4f7fb;
-      --muted: #b3bdd0;
-      --line: rgba(255, 255, 255, 0.12);
-      --accent: #7dd3fc;
-      --accent-2: #a78bfa;
-      --accent-3: #34d399;
-      --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
-    }
-
-    @media (prefers-color-scheme: light) {
-      :root {
-        --bg: #f5f7fb;
-        --bg2: #e8eef9;
-        --card: rgba(255, 255, 255, 0.72);
-        --card-strong: rgba(255, 255, 255, 0.9);
-        --text: #0f172a;
-        --muted: #556070;
-        --line: rgba(15, 23, 42, 0.08);
-        --accent: #0284c7;
-        --accent-2: #7c3aed;
-        --accent-3: #059669;
-        --shadow: 0 20px 60px rgba(15, 23, 42, 0.12);
-      }
+      --bg: #000000;
+      --fg: #d4ffd4;
+      --muted: #7aa27a;
+      --line: #1a1a1a;
+      --accent: #5cff87;
+      --panel: #050505;
+      --font:
+        "SFMono-Regular",
+        ui-monospace,
+        Consolas,
+        "Liberation Mono",
+        Menlo,
+        monospace;
     }
 
     * {
@@ -45,423 +30,287 @@
 
     html,
     body {
-      height: 100%;
-    }
-
-    html {
-      scroll-behavior: smooth;
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
     body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      color: var(--text);
-      line-height: 1.65;
-      background:
-        radial-gradient(circle at top left, rgba(125, 211, 252, 0.16), transparent 28%),
-        radial-gradient(circle at 85% 20%, rgba(167, 139, 250, 0.14), transparent 22%),
-        radial-gradient(circle at 15% 85%, rgba(52, 211, 153, 0.11), transparent 20%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
-      overflow-x: hidden;
+      padding: 20px;
     }
 
-    .bg-orb {
-      position: fixed;
-      inset: auto;
-      width: 28rem;
-      height: 28rem;
-      border-radius: 50%;
-      filter: blur(90px);
-      opacity: 0.22;
-      pointer-events: none;
-      z-index: 0;
-      animation: float 14s ease-in-out infinite;
-    }
-
-    .bg-orb.one {
-      top: -8rem;
-      left: -8rem;
-      background: radial-gradient(circle, var(--accent), transparent 65%);
-    }
-
-    .bg-orb.two {
-      right: -10rem;
-      bottom: -10rem;
-      background: radial-gradient(circle, var(--accent-2), transparent 65%);
-      animation-delay: -6s;
-    }
-
-    .bg-grid {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.22;
-      background-image:
-        linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
-      background-size: 72px 72px;
-      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 92%);
-    }
-
-    @keyframes float {
-      0%,
-      100% {
-        transform: translate3d(0, 0, 0) scale(1);
-      }
-      50% {
-        transform: translate3d(0, 18px, 0) scale(1.04);
-      }
-    }
-
-    .wrap {
-      position: relative;
-      z-index: 1;
-      min-height: 100%;
-      display: grid;
-      place-items: center;
-      padding: 28px;
-    }
-
-    .card {
-      width: min(780px, 100%);
-      padding: 34px;
+    .container {
+      width: min(760px, 100%);
+      margin: 0 auto;
       border: 1px solid var(--line);
-      border-radius: 30px;
-      background: linear-gradient(180deg, var(--card-strong), var(--card));
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
+      background: var(--panel);
     }
 
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 15% 0%, rgba(125, 211, 252, 0.12), transparent 28%),
-        radial-gradient(circle at 95% 12%, rgba(167, 139, 250, 0.10), transparent 24%);
-      pointer-events: none;
-    }
-
-    .top {
-      position: relative;
+    .bar {
       display: flex;
       align-items: center;
-      gap: 18px;
-      margin-bottom: 28px;
-      padding-bottom: 20px;
+      justify-content: space-between;
+      padding: 10px 14px;
       border-bottom: 1px solid var(--line);
-    }
-
-    .avatar {
-      width: 84px;
-      height: 84px;
-      border-radius: 24px;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), transparent 28%),
-        linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.35),
-        0 16px 30px rgba(0, 0, 0, 0.18);
-      flex: 0 0 auto;
-      position: relative;
+      color: var(--muted);
+      font-size: 0.92rem;
       overflow: hidden;
     }
 
-    .avatar::before,
-    .avatar::after {
-      content: "";
-      position: absolute;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.22);
+    .dots {
+      display: flex;
+      gap: 6px;
+      flex: 0 0 auto;
     }
 
-    .avatar::before {
-      width: 30px;
-      height: 30px;
-      top: 14px;
-      right: 16px;
-    }
-
-    .avatar::after {
-      inset: 14px;
-      border-radius: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.24);
-      background: transparent;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 10px;
-      margin-bottom: 10px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      color: var(--muted);
-      font-size: 0.9rem;
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    .dot {
+    .dots span {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--accent-3));
-      box-shadow: 0 0 0 4px rgba(125, 211, 252, 0.12);
+      background: #202020;
     }
 
-    h1 {
-      margin: 0;
-      font-size: clamp(2.1rem, 6vw, 3.5rem);
-      line-height: 1.06;
-      letter-spacing: -0.03em;
+    .title {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      margin-left: 12px;
     }
 
-    .subtitle {
-      margin: 12px 0 0;
+    main {
+      padding: 18px;
+    }
+
+    .line {
+      margin: 0 0 12px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .prompt {
+      color: var(--accent);
+    }
+
+    .path {
       color: var(--muted);
-      font-size: 1.02rem;
-      max-width: 60ch;
+    }
+
+    .cmd {
+      color: var(--fg);
+      overflow: hidden;
+      display: inline-block;
+      vertical-align: bottom;
+      border-right: 2px solid var(--accent);
+      white-space: nowrap;
+      width: 0;
+      animation:
+        typing 2s steps(28, end) forwards,
+        blink 1s step-end infinite;
+    }
+
+    @keyframes typing {
+      from {
+        width: 0;
+      }
+      to {
+        width: 28ch;
+      }
+    }
+
+    @keyframes blink {
+      50% {
+        border-color: transparent;
+      }
+    }
+
+    .section {
+      margin-top: 22px;
+    }
+
+    .section-title {
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      margin-bottom: 8px;
+      color: var(--fg);
+      word-break: break-word;
+    }
+
+    li::before {
+      content: "> ";
+      color: var(--muted);
+    }
+
+    a {
+      color: var(--fg);
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--accent);
     }
 
     .links {
       display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 18px;
-      position: relative;
-      padding-bottom: 22px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 11px 16px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.03);
-      transition:
-        transform 0.18s ease,
-        border-color 0.18s ease,
-        background 0.18s ease,
-        box-shadow 0.18s ease;
-      will-change: transform;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      border-color: rgba(125, 211, 252, 0.6);
-      background: rgba(125, 211, 252, 0.08);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
-    }
-
-    .btn:focus-visible {
-      outline: 3px solid rgba(125, 211, 252, 0.35);
-      outline-offset: 2px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 16px;
-      margin-top: 22px;
+      flex-wrap: wrap;
     }
 
-    .panel {
-      padding: 18px;
-      border-radius: 20px;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.04);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .panel::after {
-      content: "";
-      position: absolute;
-      inset: auto -28px -28px auto;
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(125, 211, 252, 0.10), transparent 68%);
-      pointer-events: none;
-    }
-
-    .section-title {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 0 0 12px;
-      font-size: 1rem;
-      letter-spacing: 0.01em;
-    }
-
-    .section-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 10px;
-      display: inline-grid;
-      place-items: center;
-      background: linear-gradient(135deg, rgba(125, 211, 252, 0.18), rgba(167, 139, 250, 0.18));
-      border: 1px solid var(--line);
-      color: var(--accent);
-      font-size: 0.95rem;
-      flex: 0 0 auto;
-    }
-
-    ul {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      display: grid;
-      gap: 10px;
+    .footer {
+      margin-top: 28px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
       color: var(--muted);
+      font-size: 0.92rem;
     }
 
-    li {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-    }
-
-    li::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      margin-top: 0.52rem;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--accent-3));
-      flex: 0 0 auto;
-    }
-
-    .tag {
-      display: none;
-    }
-
-    footer {
-      margin-top: 22px;
-      color: var(--muted);
-      font-size: 0.94rem;
-      text-align: center;
-      letter-spacing: 0.02em;
-    }
-
-    .mono {
-      font-variant-numeric: tabular-nums;
-    }
-
-    .footer-mark {
-      display: inline-grid;
-      place-items: center;
-      width: 18px;
-      height: 18px;
-      margin-right: 8px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.04);
+    .cursor {
       color: var(--accent);
-      font-size: 0.75rem;
-      vertical-align: -2px;
+      animation: cursor 1s step-end infinite;
     }
 
-    @media (max-width: 720px) {
-      .card {
-        padding: 22px;
-        border-radius: 22px;
+    @keyframes cursor {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 10px;
       }
 
-      .top {
-        align-items: flex-start;
+      main {
+        padding: 14px;
       }
 
-      .avatar {
-        width: 68px;
-        height: 68px;
-        border-radius: 20px;
+      .bar {
+        font-size: 0.82rem;
+        padding: 10px;
       }
 
-      .grid {
-        grid-template-columns: 1fr;
+      .cmd {
+        width: auto;
+        white-space: normal;
+        border-right: none;
+        animation: none;
+      }
+
+      .links {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+      }
+
+      .cmd {
+        width: auto;
+        border-right: none;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="bg-grid" aria-hidden="true"></div>
-  <div class="bg-orb one" aria-hidden="true"></div>
-  <div class="bg-orb two" aria-hidden="true"></div>
+  <div class="container">
+    <header class="bar">
+      <div class="dots" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
 
-  <main class="wrap">
-    <section class="card" aria-label="Personal homepage">
-      <div class="top">
-        <div class="avatar" aria-hidden="true"></div>
-        <div>
-          <div class="eyebrow">
-            <span class="dot" aria-hidden="true"></span>
-            <span>Personal homepage</span>
-          </div>
-          <h1>Shyweeds</h1>
-          <p class="subtitle">
-            Studying system programming.Like daydreaming and operating systems, with Linux first.
-          </p>
+      <div class="title">
+        shyweeds@localhost:~
+      </div>
+    </header>
+
+    <main>
+      <p class="line">
+        <span class="prompt">shyweeds@localhost</span>:<span class="path">~</span>$ <span class="cmd">cat intro.txt</span>
+      </p>
+
+      <p class="line">
+        shyweeds
+      </p>
+
+      <p class="line">
+        studying system programming.<br />
+        linux first.<br />
+        interested in operating systems and low-level software.
+      </p>
+
+      <section class="section">
+        <div class="section-title">
+          [ about ]
         </div>
-      </div>
 
-      <div class="links" aria-label="Social links">
-        <a class="btn" href="https://github.com/shyweeds" target="_blank" rel="noreferrer noopener">
-          GitHub
-        </a>
-        <a class="btn" href="https://gitee.com/happy_shyweeds" target="_blank" rel="noreferrer noopener">
-          Gitee
-        </a>
-      </div>
+        <ul>
+          <li>university: NUIST</li>
+          <li>major: automation</li>
+          <li>status: building a toy os</li>
+        </ul>
+      </section>
 
-      <div class="grid">
-        <section class="panel">
-          <h2 class="section-title">
-            <span class="section-icon">◎</span>
-            About me
-          </h2>
-          <ul>
-            <li><span>University: NUIST</span></li>
-            <li><span>Major: Automation</span></li>
-            <li><span>Status: building a ToyOS</span></li>
-          </ul>
-        </section>
+      <section class="section">
+        <div class="section-title">
+          [ projects ]
+        </div>
 
-        <section class="panel">
-          <h2 class="section-title">
-            <span class="section-icon">▣</span>
-            Projects
-          </h2>
-          <ul>
-            <li><span>Project A: a toy shell</span></li>
-            <li><span>Project B: a toy webserver</span></li>
-            <li><span>Project C: my fork of dwm</span></li>
-            <li><span>Project D: my dotfiles for dwm</span></li>
-          </ul>
-        </section>
-      </div>
+        <ul>
+          <li>toy shell</li>
+          <li>toy webserver</li>
+          <li>dwm fork</li>
+          <li>dwm dotfiles</li>
+        </ul>
+      </section>
 
-      <footer>
-        <span class="footer-mark" aria-hidden="true">✦</span>
-        Shyweeds
+      <section class="section">
+        <div class="section-title">
+          [ links ]
+        </div>
+
+        <div class="links">
+          <a
+            href="https://github.com/shyweeds"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            github
+          </a>
+
+          <a
+            href="https://gitee.com/happy_shyweeds"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            gitee
+          </a>
+        </div>
+      </section>
+
+      <footer class="footer">
+        last login: now on tty0
+        <span class="cursor">_</span>
       </footer>
-    </section>
-  </main>
+    </main>
+  </div>
 </body>
 </html>
-
