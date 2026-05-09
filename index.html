@@ -5,22 +5,23 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#000000" />
   <meta name="description" content="minimal terminal homepage" />
+
   <title>shyweeds</title>
 
   <style>
     :root {
       --bg: #000000;
-      --fg: #d4ffd4;
-      --muted: #7aa27a;
+      --fg: #d7ffd7;
+      --muted: #6f8f6f;
       --line: #1a1a1a;
       --accent: #5cff87;
-      --panel: #050505;
+
       --font:
         "SFMono-Regular",
         ui-monospace,
-        Consolas,
-        "Liberation Mono",
         Menlo,
+        Monaco,
+        Consolas,
         monospace;
     }
 
@@ -35,30 +36,29 @@
       background: var(--bg);
       color: var(--fg);
       font-family: var(--font);
-      line-height: 1.7;
+      line-height: 1.75;
       -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
     }
 
     body {
-      padding: 20px;
+      padding: 18px;
     }
 
-    .container {
-      width: min(760px, 100%);
+    .terminal {
+      width: min(860px, 100%);
       margin: 0 auto;
       border: 1px solid var(--line);
-      background: var(--panel);
+      background: #020202;
     }
 
     .bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
       padding: 10px 14px;
       border-bottom: 1px solid var(--line);
       color: var(--muted);
-      font-size: 0.92rem;
       overflow: hidden;
     }
 
@@ -71,24 +71,37 @@
     .dots span {
       width: 8px;
       height: 8px;
+      background: #222;
       border-radius: 50%;
-      background: #202020;
     }
 
-    .title {
+    .bar-title {
       overflow: hidden;
-      white-space: nowrap;
       text-overflow: ellipsis;
-      margin-left: 12px;
+      white-space: nowrap;
+      font-size: 0.9rem;
     }
 
     main {
       padding: 18px;
     }
 
+    .ascii {
+      color: var(--accent);
+      white-space: pre;
+      overflow-x: auto;
+      margin: 0 0 18px;
+      font-size: 0.92rem;
+      line-height: 1.35;
+      scrollbar-width: none;
+    }
+
+    .ascii::-webkit-scrollbar {
+      display: none;
+    }
+
     .line {
       margin: 0 0 12px;
-      white-space: pre-wrap;
       word-break: break-word;
     }
 
@@ -101,15 +114,15 @@
     }
 
     .cmd {
-      color: var(--fg);
-      overflow: hidden;
       display: inline-block;
-      vertical-align: bottom;
-      border-right: 2px solid var(--accent);
+      overflow: hidden;
       white-space: nowrap;
+      border-right: 2px solid var(--accent);
       width: 0;
+      vertical-align: bottom;
+
       animation:
-        typing 2s steps(28, end) forwards,
+        typing 2.2s steps(30, end) forwards,
         blink 1s step-end infinite;
     }
 
@@ -117,8 +130,9 @@
       from {
         width: 0;
       }
+
       to {
-        width: 28ch;
+        width: 30ch;
       }
     }
 
@@ -129,28 +143,22 @@
     }
 
     .section {
-      margin-top: 22px;
+      margin-top: 24px;
     }
 
     .section-title {
       color: var(--accent);
       margin-bottom: 10px;
+      white-space: pre-wrap;
     }
 
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    li {
-      margin-bottom: 8px;
-      color: var(--fg);
+    .tree {
+      white-space: pre-wrap;
       word-break: break-word;
+      color: var(--fg);
     }
 
-    li::before {
-      content: "> ";
+    .tree .muted {
       color: var(--muted);
     }
 
@@ -163,18 +171,13 @@
       color: var(--accent);
     }
 
-    .links {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
     .footer {
       margin-top: 28px;
       padding-top: 14px;
       border-top: 1px solid var(--line);
       color: var(--muted);
-      font-size: 0.92rem;
+      white-space: pre-wrap;
+      word-break: break-word;
     }
 
     .cursor {
@@ -188,7 +191,7 @@
       }
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 700px) {
       body {
         padding: 10px;
       }
@@ -197,9 +200,16 @@
         padding: 14px;
       }
 
+      .ascii {
+        font-size: 0.72rem;
+      }
+
       .bar {
-        font-size: 0.82rem;
         padding: 10px;
+      }
+
+      .bar-title {
+        font-size: 0.8rem;
       }
 
       .cmd {
@@ -208,10 +218,15 @@
         border-right: none;
         animation: none;
       }
+    }
 
-      .links {
-        flex-direction: column;
-        gap: 8px;
+    @media (max-width: 420px) {
+      .ascii {
+        font-size: 0.62rem;
+      }
+
+      main {
+        padding: 12px;
       }
     }
 
@@ -229,7 +244,8 @@
 </head>
 
 <body>
-  <div class="container">
+  <div class="terminal">
+
     <header class="bar">
       <div class="dots" aria-hidden="true">
         <span></span>
@@ -237,18 +253,25 @@
         <span></span>
       </div>
 
-      <div class="title">
+      <div class="bar-title">
         shyweeds@localhost:~
       </div>
     </header>
 
     <main>
-      <p class="line">
-        <span class="prompt">shyweeds@localhost</span>:<span class="path">~</span>$ <span class="cmd">cat intro.txt</span>
-      </p>
+
+<pre class="ascii">
+   _____ __           
+  / ___// /_  __  __
+  \__ \/ __ \/ / / /
+ ___/ / / / / /_/ /
+/____/_/ /_/\__, /
+           /____/
+</pre>
 
       <p class="line">
-        shyweeds
+        <span class="prompt">shyweeds@localhost</span>:<span class="path">~</span>$ 
+        <span class="cmd">cat ~/intro.txt</span>
       </p>
 
       <p class="line">
@@ -259,57 +282,45 @@
 
       <section class="section">
         <div class="section-title">
-          [ about ]
+[ about ]
         </div>
 
-        <ul>
-          <li>university: NUIST</li>
-          <li>major: automation</li>
-          <li>status: building a toy os</li>
-        </ul>
+<pre class="tree">
+├── university : NUIST
+├── major      : automation
+└── status     : building a toy os
+</pre>
       </section>
 
       <section class="section">
         <div class="section-title">
-          [ projects ]
+[ projects ]
         </div>
 
-        <ul>
-          <li>toy shell</li>
-          <li>toy webserver</li>
-          <li>dwm fork</li>
-          <li>dwm dotfiles</li>
-        </ul>
+<pre class="tree">
+├── toy shell
+├── toy webserver
+├── dwm fork
+└── dwm dotfiles
+</pre>
       </section>
 
       <section class="section">
         <div class="section-title">
-          [ links ]
+[ links ]
         </div>
 
-        <div class="links">
-          <a
-            href="https://github.com/shyweeds"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            github
-          </a>
-
-          <a
-            href="https://gitee.com/happy_shyweeds"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            gitee
-          </a>
-        </div>
+<pre class="tree">
+├── github : <a href="https://github.com/shyweeds" target="_blank" rel="noreferrer noopener">github.com/shyweeds</a>
+└── gitee  : <a href="https://gitee.com/happy_shyweeds" target="_blank" rel="noreferrer noopener">gitee.com/happy_shyweeds</a>
+</pre>
       </section>
 
       <footer class="footer">
-        last login: now on tty0
-        <span class="cursor">_</span>
+[ system ]
+└── last login : now on tty0 <span class="cursor">_</span>
       </footer>
+
     </main>
   </div>
 </body>
